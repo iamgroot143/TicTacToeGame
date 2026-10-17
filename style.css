@@ -1,0 +1,1815 @@
+/* ==========================================================================
+   TIGER KA HUKKUM — Neon Arcade XOX Game
+   Pure CSS3 Stylesheet: Retro-Futuristic Cyberpunk Arcade Machine
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. CSS Custom Properties / Design Tokens
+   -------------------------------------------------------------------------- */
+:root {
+  /* Core Color Palette */
+  --cyan: #00F5FF;
+  --cyan-dim: rgba(0, 245, 255, 0.25);
+  --cyan-glow: rgba(0, 245, 255, 0.65);
+  --cyan-super-glow: rgba(0, 245, 255, 0.9);
+
+  --magenta: #FF35D3;
+  --magenta-dim: rgba(255, 53, 211, 0.25);
+  --magenta-glow: rgba(255, 53, 211, 0.65);
+  --magenta-super-glow: rgba(255, 53, 211, 0.9);
+
+  --purple: #8B35FF;
+  --purple-dim: rgba(139, 53, 255, 0.25);
+  --purple-glow: rgba(139, 53, 255, 0.6);
+
+  --arcade-yellow: #FFE65C;
+  --yellow-glow: rgba(255, 230, 92, 0.65);
+
+  --deep-navy: #050719;
+  --dark-bg: #02030A;
+  --white-glow: #E8FFFF;
+
+  /* Cabinet Metallic Surfaces */
+  --metal-dark: #0A0D1E;
+  --metal-mid: #131732;
+  --metal-light: #202750;
+  --metal-edge: #2E376E;
+  --bezel-shadow: inset 0 0 40px rgba(0, 0, 0, 0.95);
+
+  /* Typography Stacks */
+  --font-retro-title: 'Impact', 'Trebuchet MS', 'Arial Black', sans-serif;
+  --font-retro-mono: 'Courier New', 'Lucida Console', Monaco, monospace;
+  --font-retro-ui: 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
+
+  /* Sizing and Dimensions */
+  --cabinet-max-width: 680px;
+  --cell-size: clamp(68px, 20vw, 105px);
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.25s ease;
+}
+
+/* --------------------------------------------------------------------------
+   2. Reset, Base & Viewport Setup
+   -------------------------------------------------------------------------- */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--dark-bg);
+  color: var(--white-glow);
+  font-family: var(--font-retro-mono);
+  overflow-x: hidden;
+  position: relative;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 18px 12px 36px;
+}
+
+/* --------------------------------------------------------------------------
+   3. Ambient Cosmic & Cyberpunk Background
+   -------------------------------------------------------------------------- */
+.cyberpunk-background {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 30%, #0d1233 0%, var(--deep-navy) 45%, var(--dark-bg) 100%);
+}
+
+/* Twinkling Starfield */
+.stars-layer {
+  position: absolute;
+  inset: 0;
+  background-repeat: repeat;
+}
+
+.stars-1 {
+  background-image:
+    radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 60px 80px, var(--cyan), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 120px 40px, var(--magenta), rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 190px 140px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 260px 70px, var(--arcade-yellow), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 320px 190px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 380px 110px, var(--cyan), rgba(0,0,0,0));
+  background-size: 400px 300px;
+  opacity: 0.65;
+  animation: starsTwinkle 6s infinite ease-in-out alternate;
+}
+
+.stars-2 {
+  background-image:
+    radial-gradient(1px 1px at 35px 65px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 95px 150px, var(--purple), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 170px 95px, #ffffff, rgba(0,0,0,0)),
+    radial-gradient(2px 2px at 240px 210px, var(--magenta), rgba(0,0,0,0)),
+    radial-gradient(1px 1px at 310px 130px, var(--cyan), rgba(0,0,0,0)),
+    radial-gradient(1.5px 1.5px at 370px 250px, #ffffff, rgba(0,0,0,0));
+  background-size: 420px 360px;
+  opacity: 0.5;
+  animation: starsTwinkle 8s infinite ease-in-out alternate-reverse;
+}
+
+@keyframes starsTwinkle {
+  0% { opacity: 0.4; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.45; }
+}
+
+/* Cosmic Neon Nebulae Glows */
+.neon-nebula {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(85px);
+  pointer-events: none;
+  opacity: 0.35;
+}
+
+.nebula-cyan {
+  top: -10%;
+  left: 10%;
+  width: 420px;
+  height: 420px;
+  background: radial-gradient(circle, var(--cyan-glow), transparent 70%);
+}
+
+.nebula-magenta {
+  top: 15%;
+  right: 5%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, var(--magenta-glow), transparent 70%);
+}
+
+.nebula-purple {
+  bottom: 10%;
+  left: 25%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, var(--purple-glow), transparent 70%);
+  opacity: 0.28;
+}
+
+/* Side Circuit Traces */
+.circuit-traces {
+  position: absolute;
+  top: 40px;
+  width: 140px;
+  height: 600px;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.circuit-left {
+  left: 10px;
+}
+
+.circuit-right {
+  right: 10px;
+}
+
+/* Perspective Grid Floor (Synthwave / Outrun horizon) */
+.perspective-grid-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 38vh;
+  perspective: 450px;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.perspective-grid {
+  position: absolute;
+  bottom: -60px;
+  left: -50%;
+  width: 200%;
+  height: 140%;
+  background-image:
+    linear-gradient(to right, rgba(0, 245, 255, 0.28) 1.5px, transparent 1.5px),
+    linear-gradient(to bottom, rgba(139, 53, 255, 0.32) 1.5px, transparent 1.5px);
+  background-size: 55px 45px;
+  transform: rotateX(72deg);
+  transform-origin: 50% 100%;
+  animation: gridScroll 10s linear infinite;
+}
+
+@keyframes gridScroll {
+  0% { background-position: 0 0; }
+  100% { background-position: 0 45px; }
+}
+
+.horizon-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 45px;
+  background: linear-gradient(to bottom, var(--dark-bg) 0%, rgba(139, 53, 255, 0.35) 50%, transparent 100%);
+  border-top: 1px solid var(--purple-glow);
+  box-shadow: 0 0 25px var(--magenta-glow);
+}
+
+/* --------------------------------------------------------------------------
+   4. Main Arcade Cabinet Container
+   -------------------------------------------------------------------------- */
+.arcade-stage {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: var(--cabinet-max-width);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.arcade-cabinet {
+  width: 100%;
+  background: linear-gradient(180deg, var(--metal-light) 0%, var(--metal-mid) 40%, var(--metal-dark) 100%);
+  border-radius: 26px 26px 18px 18px;
+  box-shadow:
+    0 0 0 3px #181d3d,
+    0 0 0 5px rgba(0, 245, 255, 0.3),
+    0 0 0 8px rgba(139, 53, 255, 0.25),
+    0 18px 50px rgba(0, 0, 0, 0.85),
+    0 0 45px rgba(0, 245, 255, 0.2),
+    0 0 70px rgba(255, 53, 211, 0.15);
+  border: 1px solid rgba(232, 255, 255, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+/* Outer Cabinet Neon Underglow Side-Beams */
+.arcade-cabinet::before,
+.arcade-cabinet::after {
+  content: '';
+  position: absolute;
+  top: 120px;
+  bottom: 80px;
+  width: 3px;
+  border-radius: 3px;
+  pointer-events: none;
+  opacity: 0.85;
+}
+
+.arcade-cabinet::before {
+  left: 4px;
+  background: linear-gradient(180deg, var(--cyan), var(--purple), transparent);
+  box-shadow: 0 0 12px var(--cyan);
+}
+
+.arcade-cabinet::after {
+  right: 4px;
+  background: linear-gradient(180deg, var(--magenta), var(--purple), transparent);
+  box-shadow: 0 0 12px var(--magenta);
+}
+
+/* --------------------------------------------------------------------------
+   5. Cabinet Header & Marquee Signboard
+   -------------------------------------------------------------------------- */
+.cabinet-marquee {
+  position: relative;
+  width: 100%;
+  background: #080B1C;
+  border-bottom: 3px solid #1c224b;
+  overflow: hidden;
+}
+
+/* Marquee Top Hood (Angled arcade roof with cooling vents and chrome bolts) */
+.marquee-hood {
+  background: linear-gradient(180deg, #2b3363 0%, #151a36 100%);
+  padding: 8px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #050713;
+  box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.18);
+}
+
+.hood-vents {
+  display: flex;
+  gap: 8px;
+}
+
+.hood-vents span {
+  display: block;
+  width: 24px;
+  height: 4px;
+  background: #060814;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 2px #000, 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.hood-bolts {
+  display: flex;
+  gap: 12px;
+}
+
+.bolt {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e0e6ff 0%, #6872a3 60%, #1f2442 100%);
+  box-shadow: 0 1px 2px #000;
+  border: 1px solid #4a548c;
+}
+
+/* The Illuminated Neon Signboard */
+.marquee-signboard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px 12px;
+  background: radial-gradient(ellipse at 50% 50%, #131940 0%, #06091b 80%, #02030a 100%);
+  border-bottom: 2px solid rgba(0, 245, 255, 0.3);
+  box-shadow:
+    inset 0 0 30px rgba(0, 245, 255, 0.2),
+    inset 0 0 50px rgba(255, 53, 211, 0.15),
+    0 6px 18px rgba(0, 0, 0, 0.7);
+}
+
+/* Decorative Arcade Cabinets Flanking the Title */
+.marquee-deco-cabinet {
+  flex-shrink: 0;
+  width: 52px;
+  height: 68px;
+  filter: drop-shadow(0 0 8px rgba(0, 245, 255, 0.5));
+  transition: transform var(--transition-normal);
+}
+
+.marquee-deco-cabinet:hover {
+  transform: scale(1.08);
+}
+
+.deco-right {
+  filter: drop-shadow(0 0 8px rgba(255, 53, 211, 0.5));
+}
+
+/* Center Branding & Typography */
+.marquee-branding {
+  text-align: center;
+  flex-grow: 1;
+  padding: 0 8px;
+}
+
+.marquee-subtext-top {
+  font-size: 0.62rem;
+  letter-spacing: 3.5px;
+  color: var(--arcade-yellow);
+  text-shadow: 0 0 8px var(--yellow-glow);
+  font-weight: 700;
+  margin-bottom: 2px;
+  text-transform: uppercase;
+}
+
+.marquee-title {
+  font-family: var(--font-retro-title);
+  font-size: clamp(1.75rem, 5.5vw, 2.75rem);
+  font-weight: 900;
+  letter-spacing: 4px;
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.word-tiger {
+  color: var(--cyan);
+  text-shadow:
+    0 0 5px #ffffff,
+    0 0 10px var(--cyan),
+    0 0 20px var(--cyan),
+    0 0 35px var(--cyan-glow),
+    0 0 50px var(--cyan-glow);
+  animation: neonFlickerCyan 5s infinite;
+}
+
+.word-ka {
+  color: var(--arcade-yellow);
+  font-size: 0.85em;
+  text-shadow:
+    0 0 5px #ffffff,
+    0 0 10px var(--arcade-yellow),
+    0 0 20px var(--yellow-glow),
+    0 0 35px var(--yellow-glow);
+}
+
+.word-hukkum {
+  color: var(--magenta);
+  text-shadow:
+    0 0 5px #ffffff,
+    0 0 10px var(--magenta),
+    0 0 20px var(--magenta),
+    0 0 35px var(--magenta-glow),
+    0 0 50px var(--magenta-glow);
+  animation: neonFlickerMagenta 7s infinite;
+}
+
+.marquee-subtext-bottom {
+  font-size: 0.65rem;
+  letter-spacing: 2.5px;
+  color: var(--white-glow);
+  opacity: 0.88;
+  font-weight: 600;
+  margin-top: 5px;
+  text-shadow: 0 0 6px var(--purple-glow);
+}
+
+.badge-flare {
+  color: var(--magenta);
+  margin: 0 4px;
+  font-size: 0.5rem;
+  vertical-align: middle;
+}
+
+/* Subtle Neon Tube Flicker Animations */
+@keyframes neonFlickerCyan {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 5px #ffffff,
+      0 0 10px var(--cyan),
+      0 0 20px var(--cyan),
+      0 0 35px var(--cyan-glow),
+      0 0 50px var(--cyan-glow);
+  }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% {
+    opacity: 0.82;
+    text-shadow: 0 0 5px var(--cyan);
+  }
+}
+
+@keyframes neonFlickerMagenta {
+  0%, 29.999%, 32%, 78.999%, 80%, 82.999%, 85%, 100% {
+    opacity: 1;
+    text-shadow:
+      0 0 5px #ffffff,
+      0 0 10px var(--magenta),
+      0 0 20px var(--magenta),
+      0 0 35px var(--magenta-glow),
+      0 0 50px var(--magenta-glow);
+  }
+  30%, 31.999%, 79%, 79.999%, 83%, 84.999% {
+    opacity: 0.84;
+    text-shadow: 0 0 6px var(--magenta);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   6. Cabinet Bezel & Upper Status Indicators
+   -------------------------------------------------------------------------- */
+.cabinet-bezel {
+  padding: 14px 16px;
+  background: linear-gradient(180deg, #10142b 0%, #0a0e22 100%);
+  border-left: 5px solid #1a2046;
+  border-right: 5px solid #1a2046;
+  position: relative;
+}
+
+.bezel-top-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.bezel-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(3, 5, 18, 0.8);
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  font-weight: 700;
+  box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.6);
+}
+
+.credit-indicator {
+  border-color: rgba(255, 230, 92, 0.4);
+  color: var(--arcade-yellow);
+}
+
+.blinking-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--arcade-yellow);
+  box-shadow: 0 0 6px var(--arcade-yellow);
+  animation: blinkFast 1s infinite alternate;
+}
+
+@keyframes blinkFast {
+  from { opacity: 0.2; }
+  to { opacity: 1; }
+}
+
+.indicator-label {
+  color: #8c97c4;
+}
+
+.indicator-value {
+  color: var(--arcade-yellow);
+}
+
+.active-mode-pill {
+  border-color: rgba(139, 53, 255, 0.45);
+  color: var(--white-glow);
+  box-shadow: 0 0 10px rgba(139, 53, 255, 0.2);
+}
+
+.mode-icon {
+  font-size: 0.85rem;
+}
+
+/* Bezel Sound Toggle Button */
+.bezel-sound-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(180deg, #182046 0%, #0d122d 100%);
+  border: 1px solid var(--cyan);
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-family: var(--font-retro-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: var(--cyan);
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--cyan-dim), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all var(--transition-fast);
+}
+
+.bezel-sound-btn:hover {
+  background: var(--cyan-dim);
+  box-shadow: 0 0 14px var(--cyan-glow);
+  color: #fff;
+  transform: translateY(-1px);
+}
+
+.bezel-sound-btn:focus-visible {
+  outline: 2px solid var(--white-glow);
+  outline-offset: 2px;
+}
+
+.bezel-sound-btn.muted {
+  border-color: #66729c;
+  color: #8c97c4;
+  box-shadow: none;
+}
+
+/* --------------------------------------------------------------------------
+   7. The CRT Screen Housing & Optical Layers
+   -------------------------------------------------------------------------- */
+.crt-screen-wrapper {
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, #0b112c 0%, #050818 60%, #02030a 100%);
+  border-radius: 18px;
+  border: 3px solid #1c234a;
+  box-shadow:
+    0 0 0 2px #000,
+    0 0 15px rgba(0, 245, 255, 0.2),
+    inset 0 0 45px rgba(0, 0, 0, 0.95),
+    inset 0 0 15px rgba(0, 245, 255, 0.15);
+  overflow: hidden;
+  padding: 16px 14px 14px;
+}
+
+/* CRT Optical Glass Curvature & Corner Vignette */
+.crt-vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(2, 3, 10, 0.65) 90%, rgba(0, 0, 0, 0.95) 100%);
+  pointer-events: none;
+  z-index: 10;
+  border-radius: 16px;
+}
+
+/* CRT Scanlines Layer */
+.crt-scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.28) 3px,
+    rgba(0, 0, 0, 0.28) 4px
+  );
+  pointer-events: none;
+  z-index: 11;
+  opacity: 0.75;
+}
+
+/* Diagonal Glass Reflection Flare */
+.crt-glass-glare {
+  position: absolute;
+  top: -40%;
+  left: -40%;
+  width: 180%;
+  height: 90%;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.015) 35%, transparent 60%);
+  transform: rotate(-12deg);
+  pointer-events: none;
+  z-index: 12;
+}
+
+/* Screen Glitch Effect Class */
+.screen-glitch {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 245, 255, 0.12);
+  pointer-events: none;
+  z-index: 13;
+  opacity: 0;
+}
+
+.screen-glitch.active-glitch {
+  animation: glitchFlash 0.35s ease-out;
+}
+
+@keyframes glitchFlash {
+  0% { opacity: 0.7; transform: translate(3px, -2px); filter: hue-rotate(90deg); }
+  25% { opacity: 0.4; transform: translate(-3px, 2px); }
+  50% { opacity: 0.6; transform: translate(2px, 1px); }
+  75% { opacity: 0.2; transform: translate(-1px, -1px); }
+  100% { opacity: 0; transform: translate(0, 0); }
+}
+
+.screen-inner-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* --------------------------------------------------------------------------
+   8. In-Screen Status Banner & Announcer
+   -------------------------------------------------------------------------- */
+.status-banner-container {
+  width: 100%;
+  max-width: 480px;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4, 7, 24, 0.85);
+  border: 1px solid rgba(0, 245, 255, 0.4);
+  border-radius: 8px;
+  padding: 8px 12px;
+  box-shadow:
+    inset 0 0 12px rgba(0, 245, 255, 0.15),
+    0 0 12px rgba(0, 245, 255, 0.2);
+}
+
+.status-badge-deco {
+  color: var(--arcade-yellow);
+  font-size: 0.75rem;
+  padding: 0 8px;
+  animation: pulseDeco 1.2s infinite alternate;
+}
+
+@keyframes pulseDeco {
+  from { opacity: 0.4; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1.1); }
+}
+
+.game-status-text {
+  font-family: var(--font-retro-title);
+  font-size: clamp(0.95rem, 3.2vw, 1.25rem);
+  font-weight: 800;
+  letter-spacing: 2.2px;
+  text-align: center;
+  color: var(--cyan);
+  text-shadow: 0 0 10px var(--cyan-glow);
+  text-transform: uppercase;
+  transition: all var(--transition-normal);
+}
+
+/* Status variants for results */
+.game-status-text.turn-x {
+  color: var(--cyan);
+  text-shadow: 0 0 10px var(--cyan-glow);
+}
+
+.game-status-text.turn-o {
+  color: var(--magenta);
+  text-shadow: 0 0 10px var(--magenta-glow);
+}
+
+.game-status-text.winner-x {
+  color: var(--cyan);
+  text-shadow: 0 0 6px #fff, 0 0 15px var(--cyan), 0 0 30px var(--cyan-glow);
+  animation: statusWinPulse 0.8s infinite alternate;
+}
+
+.game-status-text.winner-o {
+  color: var(--magenta);
+  text-shadow: 0 0 6px #fff, 0 0 15px var(--magenta), 0 0 30px var(--magenta-glow);
+  animation: statusWinPulse 0.8s infinite alternate;
+}
+
+.game-status-text.draw-state {
+  color: var(--arcade-yellow);
+  text-shadow: 0 0 8px var(--yellow-glow);
+  animation: statusWinPulse 1s infinite alternate;
+}
+
+.game-status-text.thinking-state {
+  color: var(--purple);
+  text-shadow: 0 0 10px var(--purple-glow);
+}
+
+@keyframes statusWinPulse {
+  from { transform: scale(0.98); }
+  to { transform: scale(1.04); }
+}
+
+/* --------------------------------------------------------------------------
+   9. In-Screen Arcade Scoreboard
+   -------------------------------------------------------------------------- */
+.scoreboard-container {
+  width: 100%;
+  max-width: 480px;
+  display: grid;
+  grid-template-columns: 1fr 0.8fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.score-card {
+  position: relative;
+  background: rgba(6, 10, 32, 0.85);
+  border-radius: 10px;
+  padding: 8px 6px;
+  text-align: center;
+  border: 1.5px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.8);
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+.score-card-x {
+  border-color: rgba(0, 245, 255, 0.35);
+}
+
+.score-card-x.active-card {
+  border-color: var(--cyan);
+  box-shadow: 0 0 18px var(--cyan-dim), inset 0 0 14px rgba(0, 245, 255, 0.2);
+}
+
+.score-card-o {
+  border-color: rgba(255, 53, 211, 0.35);
+}
+
+.score-card-o.active-card {
+  border-color: var(--magenta);
+  box-shadow: 0 0 18px var(--magenta-dim), inset 0 0 14px rgba(255, 53, 211, 0.2);
+}
+
+.score-card-draw {
+  border-color: rgba(255, 230, 92, 0.25);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 2px;
+}
+
+.symbol-glyph {
+  font-weight: 900;
+  font-size: 0.9rem;
+}
+
+.symbol-x {
+  color: var(--cyan);
+  text-shadow: 0 0 6px var(--cyan-glow);
+}
+
+.symbol-o {
+  color: var(--magenta);
+  text-shadow: 0 0 6px var(--magenta-glow);
+}
+
+.symbol-draw {
+  color: var(--arcade-yellow);
+  text-shadow: 0 0 6px var(--yellow-glow);
+}
+
+.player-name {
+  font-family: var(--font-retro-title);
+  font-size: clamp(0.68rem, 2vw, 0.82rem);
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: #b5c2e8;
+  white-space: nowrap;
+}
+
+.score-number {
+  font-family: var(--font-retro-mono);
+  font-size: clamp(1.4rem, 4vw, 1.85rem);
+  font-weight: 900;
+  line-height: 1.1;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+  margin-bottom: 4px;
+}
+
+.score-card-x .score-number {
+  color: var(--cyan);
+  text-shadow: 0 0 10px var(--cyan-glow);
+}
+
+.score-card-o .score-number {
+  color: var(--magenta);
+  text-shadow: 0 0 10px var(--magenta-glow);
+}
+
+.score-card-draw .score-number {
+  color: var(--arcade-yellow);
+  text-shadow: 0 0 10px var(--yellow-glow);
+}
+
+.card-turn-pill {
+  font-size: 0.55rem;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+  padding: 2px 6px;
+  border-radius: 4px;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.06);
+  color: #657199;
+  text-transform: uppercase;
+  transition: all var(--transition-fast);
+}
+
+.card-turn-pill.active-turn {
+  background: var(--cyan);
+  color: #02040d;
+  box-shadow: 0 0 10px var(--cyan);
+  font-weight: 900;
+  animation: turnBadgePulse 1s infinite alternate;
+}
+
+.score-card-o .card-turn-pill.active-turn {
+  background: var(--magenta);
+  color: #02040d;
+  box-shadow: 0 0 10px var(--magenta);
+}
+
+.draw-pill {
+  color: #8c97c4;
+}
+
+@keyframes turnBadgePulse {
+  from { transform: scale(0.95); opacity: 0.9; }
+  to { transform: scale(1.05); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   10. 3x3 XOX Game Board
+   -------------------------------------------------------------------------- */
+.board-frame-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(3, 6, 20, 0.7);
+  border-radius: 18px;
+  border: 2px solid rgba(0, 245, 255, 0.25);
+  box-shadow:
+    inset 0 0 25px rgba(0, 0, 0, 0.9),
+    0 0 25px rgba(0, 245, 255, 0.15);
+  margin-bottom: 12px;
+}
+
+.board-neon-rim {
+  position: absolute;
+  inset: -2px;
+  border-radius: 20px;
+  border: 1px solid rgba(139, 53, 255, 0.4);
+  pointer-events: none;
+  box-shadow: 0 0 15px rgba(139, 53, 255, 0.25);
+}
+
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(3, var(--cell-size));
+  grid-template-rows: repeat(3, var(--cell-size));
+  gap: 8px;
+  background: rgba(0, 245, 255, 0.18);
+  padding: 8px;
+  border-radius: 14px;
+  box-shadow: 0 0 18px rgba(0, 245, 255, 0.2);
+}
+
+/* Individual Cell Button */
+.grid-cell {
+  width: var(--cell-size);
+  height: var(--cell-size);
+  background: radial-gradient(circle at 50% 50%, rgba(14, 20, 52, 0.85) 0%, rgba(5, 7, 24, 0.95) 100%);
+  border: 2px solid rgba(0, 245, 255, 0.3);
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  position: relative;
+  transition: all var(--transition-normal);
+  outline: none;
+  box-shadow: inset 0 0 12px rgba(0, 0, 0, 0.7);
+}
+
+/* Empty Cell Hover State */
+.grid-cell:not(.cell-taken):hover {
+  background: radial-gradient(circle at 50% 50%, rgba(20, 30, 75, 0.9) 0%, rgba(8, 12, 36, 0.98) 100%);
+  transform: scale(1.02);
+}
+
+.game-grid[data-turn="X"] .grid-cell:not(.cell-taken):hover {
+  border-color: var(--cyan);
+  box-shadow:
+    0 0 18px var(--cyan-dim),
+    inset 0 0 15px rgba(0, 245, 255, 0.35);
+}
+
+.game-grid[data-turn="O"] .grid-cell:not(.cell-taken):hover {
+  border-color: var(--magenta);
+  box-shadow:
+    0 0 18px var(--magenta-dim),
+    inset 0 0 15px rgba(255, 53, 211, 0.35);
+}
+
+/* Cell Accessibility Focus */
+.grid-cell:focus-visible {
+  outline: 3px solid var(--arcade-yellow);
+  outline-offset: 2px;
+  box-shadow: 0 0 20px var(--yellow-glow);
+}
+
+/* Occupied Cell State */
+.grid-cell.cell-taken {
+  cursor: not-allowed;
+}
+
+/* Winning Cell Highlight State */
+.grid-cell.cell-winning {
+  border-color: var(--arcade-yellow);
+  background: radial-gradient(circle at 50% 50%, rgba(55, 30, 90, 0.95) 0%, rgba(18, 10, 42, 0.98) 100%);
+  box-shadow:
+    0 0 24px var(--yellow-glow),
+    inset 0 0 22px rgba(255, 230, 92, 0.45);
+  animation: winningCellGlow 1.2s infinite alternate;
+  z-index: 5;
+}
+
+@keyframes winningCellGlow {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 15px var(--yellow-glow), inset 0 0 15px rgba(255, 230, 92, 0.3);
+  }
+  100% {
+    transform: scale(1.04);
+    box-shadow: 0 0 28px var(--arcade-yellow), inset 0 0 25px rgba(255, 230, 92, 0.6);
+  }
+}
+
+/* --------------------------------------------------------------------------
+   11. X and O Symbol Renderings
+   -------------------------------------------------------------------------- */
+.symbol-mark {
+  width: 70%;
+  height: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  animation: symbolPopIn 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes symbolPopIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.2) rotate(-15deg);
+  }
+  70% {
+    transform: scale(1.15) rotate(3deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* Symbol X (Electric Cyan Neon SVG) */
+.symbol-mark-x svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 8px var(--cyan-glow)) drop-shadow(0 0 15px var(--cyan));
+}
+
+.symbol-mark-x line {
+  stroke: var(--cyan);
+  stroke-width: 10;
+  stroke-linecap: round;
+}
+
+/* Symbol O (Hot Magenta Neon SVG) */
+.symbol-mark-o svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 8px var(--magenta-glow)) drop-shadow(0 0 15px var(--magenta));
+}
+
+.symbol-mark-o circle {
+  stroke: var(--magenta);
+  stroke-width: 9;
+  fill: none;
+}
+
+/* --------------------------------------------------------------------------
+   12. SVG Winning Strike Line Layer
+   -------------------------------------------------------------------------- */
+.winning-strike-svg {
+  position: absolute;
+  inset: 12px;
+  width: calc(100% - 24px);
+  height: calc(100% - 24px);
+  pointer-events: none;
+  z-index: 8;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.winning-strike-svg.strike-active {
+  opacity: 1;
+}
+
+#winning-strike-line {
+  stroke-dasharray: 400;
+  stroke-dashoffset: 400;
+  transition: stroke-dashoffset 0.4s ease-out;
+  filter: drop-shadow(0 0 10px #fff) drop-shadow(0 0 20px var(--cyan)) drop-shadow(0 0 35px var(--magenta));
+}
+
+.winning-strike-svg.strike-active #winning-strike-line {
+  stroke-dashoffset: 0;
+}
+
+/* --------------------------------------------------------------------------
+   13. Confetti / Particle Overlay
+   -------------------------------------------------------------------------- */
+.particles-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9;
+}
+
+.arcade-particle {
+  position: absolute;
+  border-radius: 2px;
+  pointer-events: none;
+  animation: particleBurst 0.9s ease-out forwards;
+}
+
+@keyframes particleBurst {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(1) rotate(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(var(--dx), var(--dy)) scale(0.2) rotate(var(--rot));
+  }
+}
+
+/* Screen Footer Meta */
+.screen-footer-meta {
+  font-size: 0.65rem;
+  letter-spacing: 1.5px;
+  color: #7988bd;
+  text-align: center;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-icon {
+  color: var(--arcade-yellow);
+  font-size: 0.6rem;
+}
+
+/* --------------------------------------------------------------------------
+   14. Arcade Control Deck & Action Buttons
+   -------------------------------------------------------------------------- */
+.arcade-control-deck {
+  background: linear-gradient(180deg, #161c3b 0%, #0d122d 40%, #070a1a 100%);
+  border-top: 3px solid #273066;
+  padding: 14px 16px 18px;
+  position: relative;
+}
+
+.deck-top-trim {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  padding: 0 4px;
+}
+
+.trim-rivet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff 0%, #8591c2 60%, #20274c 100%);
+  border: 1px solid #4a548c;
+  box-shadow: 0 1px 2px #000;
+}
+
+.trim-label {
+  font-family: var(--font-retro-title);
+  font-size: 0.68rem;
+  letter-spacing: 2px;
+  color: #8c97c4;
+}
+
+/* Buttons Rows */
+.deck-buttons-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.buttons-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+/* Base Arcade Push Button */
+.arcade-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  font-family: var(--font-retro-title);
+  font-size: clamp(0.72rem, 2.2vw, 0.88rem);
+  font-weight: 800;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: all var(--transition-fast);
+  box-shadow:
+    0 4px 0 #000,
+    0 6px 10px rgba(0, 0, 0, 0.6);
+  user-select: none;
+  overflow: hidden;
+}
+
+.arcade-btn:active {
+  transform: translateY(3px);
+  box-shadow:
+    0 1px 0 #000,
+    0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.arcade-btn:focus-visible {
+  outline: 2px solid var(--white-glow);
+  outline-offset: 3px;
+}
+
+.btn-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 45%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, transparent 100%);
+  border-radius: 6px 6px 0 0;
+  pointer-events: none;
+}
+
+.btn-icon {
+  font-size: 0.9rem;
+}
+
+/* Button Color Themes */
+/* Cyan Button (New Game) */
+.btn-cyan {
+  background: linear-gradient(180deg, #09475c 0%, #03232f 100%);
+  border-color: var(--cyan);
+  color: var(--cyan);
+  text-shadow: 0 0 6px var(--cyan-glow);
+}
+
+.btn-cyan:hover {
+  background: linear-gradient(180deg, #0d5f7c 0%, #053648 100%);
+  box-shadow: 0 0 15px var(--cyan-dim), 0 4px 0 #000;
+  color: #fff;
+}
+
+/* Purple Button (Play Again) */
+.btn-purple {
+  background: linear-gradient(180deg, #371866 0%, #1e0b3b 100%);
+  border-color: var(--purple);
+  color: #d1b0ff;
+  text-shadow: 0 0 6px var(--purple-glow);
+}
+
+.btn-purple:hover {
+  background: linear-gradient(180deg, #4f2391 0%, #2b1154 100%);
+  box-shadow: 0 0 15px var(--purple-dim), 0 4px 0 #000;
+  color: #fff;
+}
+
+/* Play Again Pulsing Highlight when game over */
+.btn-purple.highlight-pulse {
+  animation: playAgainPulse 1s infinite alternate;
+  border-color: var(--arcade-yellow);
+  color: var(--arcade-yellow);
+}
+
+@keyframes playAgainPulse {
+  from {
+    transform: scale(0.98);
+    box-shadow: 0 0 10px var(--purple-glow), 0 4px 0 #000;
+  }
+  to {
+    transform: scale(1.03);
+    box-shadow: 0 0 25px var(--magenta-glow), 0 0 15px var(--yellow-glow), 0 4px 0 #000;
+  }
+}
+
+/* Danger Magenta Button (Reset Score) */
+.btn-danger {
+  background: linear-gradient(180deg, #59163f 0%, #2d0a1f 100%);
+  border-color: var(--magenta);
+  color: var(--magenta);
+  text-shadow: 0 0 6px var(--magenta-glow);
+}
+
+.btn-danger:hover {
+  background: linear-gradient(180deg, #781c54 0%, #420d2c 100%);
+  box-shadow: 0 0 15px var(--magenta-dim), 0 4px 0 #000;
+  color: #fff;
+}
+
+/* Yellow Button (Mode Toggles) */
+.btn-yellow {
+  background: linear-gradient(180deg, #4d4416 0%, #282309 100%);
+  border-color: rgba(255, 230, 92, 0.4);
+  color: #e6dc9f;
+}
+
+.btn-yellow:hover {
+  border-color: var(--arcade-yellow);
+  color: var(--arcade-yellow);
+  box-shadow: 0 0 12px var(--yellow-glow), 0 4px 0 #000;
+}
+
+/* Active Mode Selected Indicator */
+.btn-yellow.active-mode {
+  background: linear-gradient(180deg, #7a6a1a 0%, #423807 100%);
+  border-color: var(--arcade-yellow);
+  color: #fff;
+  text-shadow: 0 0 8px var(--yellow-glow);
+  box-shadow: 0 0 18px var(--yellow-glow), 0 4px 0 #000;
+}
+
+/* Magenta Button (Switch Symbol) */
+.btn-magenta {
+  background: linear-gradient(180deg, #4a1945 0%, #260c23 100%);
+  border-color: var(--magenta);
+  color: var(--magenta);
+  text-shadow: 0 0 6px var(--magenta-glow);
+}
+
+.btn-magenta:hover {
+  background: linear-gradient(180deg, #6b2464 0%, #3d1238 100%);
+  box-shadow: 0 0 15px var(--magenta-dim), 0 4px 0 #000;
+  color: #fff;
+}
+
+/* --------------------------------------------------------------------------
+   15. Physical Hardware Decorative Elements (Joystick, Pushbuttons, Coin Door)
+   -------------------------------------------------------------------------- */
+.cabinet-hardware-deco {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px 6px;
+  background: rgba(4, 7, 20, 0.75);
+  border-radius: 10px;
+  border: 1px solid #1a224a;
+}
+
+.hardware-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.hardware-label {
+  font-size: 0.58rem;
+  letter-spacing: 1.5px;
+  color: #657199;
+  font-weight: 700;
+}
+
+/* Left Joystick Assembly */
+.joystick-assembly {
+  width: 75px;
+}
+
+.joystick-base {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.joystick-washer {
+  position: absolute;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #0e122b 35%, #050713 80%);
+  border: 2px solid #293466;
+  box-shadow: inset 0 2px 5px #000, 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.joystick-shaft {
+  position: absolute;
+  width: 7px;
+  height: 20px;
+  background: linear-gradient(90deg, #fff 0%, #9ba6cc 50%, #3e4669 100%);
+  top: 10px;
+  border-radius: 3px;
+  z-index: 2;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+}
+
+.joystick-ball {
+  position: absolute;
+  top: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+.ball-cyan {
+  background: radial-gradient(circle at 35% 35%, #e8ffff 0%, var(--cyan) 50%, #006073 100%);
+  box-shadow: 0 0 12px var(--cyan-glow), 0 3px 6px rgba(0, 0, 0, 0.9);
+}
+
+/* Center Coin Door */
+.coin-door {
+  padding: 4px 10px;
+  background: #080b1e;
+  border: 1.5px solid #202752;
+  border-radius: 6px;
+  box-shadow: inset 0 0 8px #000;
+}
+
+.coin-slots-wrapper {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.coin-slot-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.coin-slot-opening {
+  width: 4px;
+  height: 18px;
+  background: #000;
+  border-radius: 2px;
+  border: 1px solid #4a548c;
+  box-shadow: inset 0 0 3px #000;
+}
+
+.coin-insert-badge {
+  font-size: 0.48rem;
+  letter-spacing: 0.5px;
+  color: var(--arcade-yellow);
+  background: rgba(255, 230, 92, 0.12);
+  border: 1px solid rgba(255, 230, 92, 0.35);
+  border-radius: 2px;
+  padding: 1px 3px;
+  font-weight: 700;
+}
+
+.coin-keyhole {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #000;
+  border: 1px solid #414b7e;
+  margin: 0 auto;
+}
+
+/* Right Pushbuttons Cluster */
+.arcade-pushbuttons {
+  width: 75px;
+}
+
+.pushbuttons-cluster {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+}
+
+.pushbtn {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  box-shadow: 0 3px 0 #000, 0 3px 5px rgba(0, 0, 0, 0.8);
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+}
+
+.pushbtn-red {
+  background: radial-gradient(circle at 35% 35%, #ff85d2 0%, var(--magenta) 60%, #570a44 100%);
+  box-shadow: 0 0 8px var(--magenta-glow), 0 3px 0 #000;
+}
+
+.pushbtn-blue {
+  background: radial-gradient(circle at 35% 35%, #a5f6ff 0%, var(--cyan) 60%, #004d57 100%);
+  box-shadow: 0 0 8px var(--cyan-glow), 0 3px 0 #000;
+}
+
+.pushbtn-yellow {
+  background: radial-gradient(circle at 35% 35%, #fff2a8 0%, var(--arcade-yellow) 60%, #6e5e0a 100%);
+  box-shadow: 0 0 8px var(--yellow-glow), 0 3px 0 #000;
+}
+
+/* --------------------------------------------------------------------------
+   16. Confirmation Modal (Reset Score Dialog)
+   -------------------------------------------------------------------------- */
+.arcade-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 3, 10, 0.85);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-normal);
+}
+
+.arcade-modal-backdrop:not([hidden]) {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.arcade-modal-box {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: linear-gradient(180deg, #131838 0%, #080c24 100%);
+  border: 2px solid var(--magenta);
+  border-radius: 12px;
+  padding: 24px 20px 20px;
+  text-align: center;
+  box-shadow:
+    0 0 35px var(--magenta-glow),
+    inset 0 0 30px rgba(0, 0, 0, 0.9);
+  animation: modalPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Tech Corner Brackets */
+.modal-corner-bracket {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-color: var(--cyan);
+  border-style: solid;
+  pointer-events: none;
+}
+
+.modal-corner-bracket.tl { top: 6px; left: 6px; border-width: 2px 0 0 2px; }
+.modal-corner-bracket.tr { top: 6px; right: 6px; border-width: 2px 2px 0 0; }
+.modal-corner-bracket.bl { bottom: 6px; left: 6px; border-width: 0 0 2px 2px; }
+.modal-corner-bracket.br { bottom: 6px; right: 6px; border-width: 0 2px 2px 0; }
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.modal-alert-icon {
+  font-size: 1.4rem;
+}
+
+.modal-title {
+  font-family: var(--font-retro-title);
+  font-size: 1.35rem;
+  letter-spacing: 2px;
+  color: var(--magenta);
+  text-shadow: 0 0 10px var(--magenta-glow);
+  margin: 0;
+}
+
+.modal-message {
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #c9d5ff;
+  letter-spacing: 1px;
+  margin-bottom: 22px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+}
+
+.modal-actions .arcade-btn {
+  flex: 1;
+}
+
+/* --------------------------------------------------------------------------
+   17. Responsive Design Media Queries
+   -------------------------------------------------------------------------- */
+/* Tablet Devices (<= 768px) */
+@media (max-width: 768px) {
+  body {
+    padding: 12px 8px 24px;
+  }
+
+  .circuit-traces {
+    display: none;
+  }
+
+  .arcade-cabinet {
+    border-radius: 18px 18px 14px 14px;
+  }
+
+  .marquee-signboard {
+    padding: 10px 12px;
+  }
+
+  .marquee-deco-cabinet {
+    width: 42px;
+    height: 56px;
+  }
+
+  .marquee-title {
+    font-size: clamp(1.4rem, 4.5vw, 2.1rem);
+    letter-spacing: 2.5px;
+  }
+
+  .cabinet-bezel {
+    padding: 12px 10px;
+  }
+
+  .buttons-row {
+    gap: 8px;
+  }
+
+  .arcade-btn {
+    padding: 9px 6px;
+    font-size: 0.72rem;
+    letter-spacing: 0.8px;
+  }
+}
+
+/* Mobile Devices (<= 520px) */
+@media (max-width: 520px) {
+  body {
+    padding: 8px 4px 20px;
+  }
+
+  .marquee-hood {
+    padding: 6px 12px;
+  }
+
+  .hood-vents span {
+    width: 16px;
+    height: 3px;
+  }
+
+  /* Simplify/scale side decos on small screens */
+  .marquee-deco-cabinet {
+    width: 34px;
+    height: 46px;
+  }
+
+  .marquee-subtext-top {
+    font-size: 0.52rem;
+    letter-spacing: 2px;
+  }
+
+  .marquee-title {
+    font-size: 1.45rem;
+    letter-spacing: 1.5px;
+    gap: 6px;
+  }
+
+  .marquee-subtext-bottom {
+    font-size: 0.54rem;
+    letter-spacing: 1px;
+  }
+
+  .bezel-top-bar {
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .bezel-indicator {
+    font-size: 0.65rem;
+    padding: 3px 7px;
+  }
+
+  .bezel-sound-btn {
+    font-size: 0.65rem;
+    padding: 3px 8px;
+  }
+
+  .crt-screen-wrapper {
+    padding: 12px 8px 10px;
+  }
+
+  .scoreboard-container {
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+
+  .player-name {
+    font-size: 0.62rem;
+  }
+
+  .score-number {
+    font-size: 1.3rem;
+  }
+
+  .game-grid {
+    gap: 6px;
+    padding: 6px;
+  }
+
+  /* Stack buttons nicely on narrow viewports if necessary */
+  .deck-buttons-grid {
+    gap: 8px;
+  }
+
+  .buttons-row {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+  }
+
+  .arcade-btn {
+    padding: 8px 4px;
+    font-size: 0.65rem;
+    letter-spacing: 0.5px;
+    gap: 4px;
+  }
+
+  .btn-icon {
+    font-size: 0.78rem;
+  }
+
+  /* Compact hardware deco on mobile */
+  .cabinet-hardware-deco {
+    padding: 8px 10px 4px;
+  }
+
+  .joystick-base {
+    width: 38px;
+    height: 38px;
+  }
+
+  .joystick-washer {
+    width: 34px;
+    height: 34px;
+  }
+
+  .joystick-ball {
+    width: 18px;
+    height: 18px;
+  }
+
+  .pushbuttons-cluster {
+    height: 38px;
+    gap: 4px;
+  }
+
+  .pushbtn {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+/* Extra Small Screens (<= 380px) */
+@media (max-width: 380px) {
+  .marquee-deco-cabinet {
+    display: none;
+  }
+
+  .buttons-row {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .arcade-btn {
+    padding: 10px 8px;
+    font-size: 0.76rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   18. Accessibility & Prefers-Reduced-Motion
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .perspective-grid {
+    animation: none !important;
+  }
+
+  .stars-1, .stars-2 {
+    animation: none !important;
+  }
+
+  .word-tiger, .word-hukkum {
+    animation: none !important;
+  }
+
+  .card-turn-pill.active-turn {
+    animation: none !important;
+  }
+
+  .winning-strike-svg.strike-active #winning-strike-line {
+    stroke-dashoffset: 0 !important;
+  }
+
+  .arcade-particle {
+    display: none !important;
+  }
+}

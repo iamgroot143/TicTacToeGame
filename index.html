@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TIGER KA HUKKUM — Retro-futuristic Neon Arcade XOX (Tic-Tac-Toe) Game with cyberpunk visuals, smart AI, and synthesized Web Audio effects.">
+  <meta name="theme-color" content="#02030A">
+  <title>TIGER KA HUKKUM — Neon Arcade XOX Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient Cosmic & Cyberpunk Background -->
+  <div class="cyberpunk-background" aria-hidden="true">
+    <div class="stars-layer stars-1"></div>
+    <div class="stars-layer stars-2"></div>
+    <div class="neon-nebula nebula-cyan"></div>
+    <div class="neon-nebula nebula-magenta"></div>
+    <div class="neon-nebula nebula-purple"></div>
+    <div class="circuit-traces circuit-left">
+      <svg viewBox="0 0 160 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 20 H70 L110 60 V180 L140 210 H160" stroke="#00F5FF" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.4"/>
+        <circle cx="10" cy="20" r="3" fill="#00F5FF" opacity="0.8"/>
+        <circle cx="160" cy="210" r="3" fill="#00F5FF" opacity="0.8"/>
+        <path d="M30 140 H90 L130 180 V320 L90 360 H20" stroke="#8B35FF" stroke-width="1.5" opacity="0.35"/>
+        <circle cx="20" cy="360" r="3" fill="#8B35FF" opacity="0.7"/>
+        <path d="M0 450 H80 L120 490 V580" stroke="#FF35D3" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.3"/>
+        <circle cx="120" cy="580" r="3" fill="#FF35D3" opacity="0.7"/>
+      </svg>
+    </div>
+    <div class="circuit-traces circuit-right">
+      <svg viewBox="0 0 160 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M150 20 H90 L50 60 V180 L20 210 H0" stroke="#FF35D3" stroke-width="1.5" stroke-dasharray="8 4" opacity="0.4"/>
+        <circle cx="150" cy="20" r="3" fill="#FF35D3" opacity="0.8"/>
+        <circle cx="0" cy="210" r="3" fill="#FF35D3" opacity="0.8"/>
+        <path d="M130 140 H70 L30 180 V320 L70 360 H140" stroke="#8B35FF" stroke-width="1.5" opacity="0.35"/>
+        <circle cx="140" cy="360" r="3" fill="#8B35FF" opacity="0.7"/>
+        <path d="M160 450 H80 L40 490 V580" stroke="#00F5FF" stroke-width="1.5" stroke-dasharray="6 3" opacity="0.3"/>
+        <circle cx="40" cy="580" r="3" fill="#00F5FF" opacity="0.7"/>
+      </svg>
+    </div>
+    <!-- Perspective Grid Floor -->
+    <div class="perspective-grid-container">
+      <div class="perspective-grid"></div>
+      <div class="horizon-glow"></div>
+    </div>
+  </div>
+
+  <!-- Main Game Wrapper / Viewport Center -->
+  <main class="arcade-stage" id="game-stage">
+    <!-- Physical Arcade Machine Cabinet -->
+    <section class="arcade-cabinet" aria-label="Tiger Ka Hukkum Neon Arcade Machine">
+      <!-- Cabinet Top Bevel & Illuminated Marquee Header -->
+      <header class="cabinet-marquee">
+        <div class="marquee-hood">
+          <div class="hood-vents">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <div class="hood-bolts">
+            <span class="bolt"></span><span class="bolt"></span>
+          </div>
+        </div>
+
+        <div class="marquee-signboard">
+          <!-- Left Decorative Arcade Machine SVG -->
+          <div class="marquee-deco-cabinet deco-left" aria-hidden="true">
+            <svg viewBox="0 0 54 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Cabinet Outer Silhouette -->
+              <path d="M10 2 H44 L50 14 V58 L46 68 H8 L4 58 V14 Z" fill="#0E122A" stroke="#00F5FF" stroke-width="1.5"/>
+              <!-- Marquee -->
+              <rect x="12" y="6" width="30" height="10" rx="2" fill="#050719" stroke="#FF35D3" stroke-width="1"/>
+              <text x="27" y="14" fill="#FFE65C" font-size="6" font-weight="900" text-anchor="middle" font-family="monospace">XOX</text>
+              <!-- Screen -->
+              <rect x="10" y="20" width="34" height="24" rx="2" fill="#02030A" stroke="#00F5FF" stroke-width="1"/>
+              <path d="M15 25 L23 33 M23 25 L15 33" stroke="#00F5FF" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="34" cy="29" r="4" stroke="#FF35D3" stroke-width="1.5"/>
+              <!-- Control Deck -->
+              <path d="M7 47 H47 L45 57 H9 Z" fill="#1A2045" stroke="#8B35FF" stroke-width="1"/>
+              <!-- Joystick & Buttons -->
+              <circle cx="18" cy="51" r="2.5" fill="#FF35D3"/>
+              <line x1="18" y1="51" x2="18" y2="55" stroke="#E8FFFF" stroke-width="1.5"/>
+              <circle cx="30" cy="52" r="1.5" fill="#00F5FF"/>
+              <circle cx="36" cy="52" r="1.5" fill="#FFE65C"/>
+              <!-- Coin Door -->
+              <rect x="18" y="59" width="18" height="8" rx="1" fill="#080A18" stroke="#FFE65C" stroke-width="0.8"/>
+              <line x1="24" y1="61" x2="24" y2="65" stroke="#FFE65C" stroke-width="1"/>
+              <line x1="30" y1="61" x2="30" y2="65" stroke="#FFE65C" stroke-width="1"/>
+            </svg>
+          </div>
+
+          <!-- Main Title Centerpiece -->
+          <div class="marquee-branding">
+            <div class="marquee-subtext-top">★ 1984 RETRO CYBER EDITION ★</div>
+            <h1 class="marquee-title" aria-label="Tiger Ka Hukkum">
+              <span class="title-word word-tiger">TIGER</span>
+              <span class="title-word word-ka">KA</span>
+              <span class="title-word word-hukkum">HUKKUM</span>
+            </h1>
+            <div class="marquee-subtext-bottom">
+              <span class="badge-flare">●</span>
+              NEON ARCADE XOX CHAMPIONSHIP
+              <span class="badge-flare">●</span>
+            </div>
+          </div>
+
+          <!-- Right Decorative Arcade Machine SVG -->
+          <div class="marquee-deco-cabinet deco-right" aria-hidden="true">
+            <svg viewBox="0 0 54 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Cabinet Outer Silhouette -->
+              <path d="M10 2 H44 L50 14 V58 L46 68 H8 L4 58 V14 Z" fill="#0E122A" stroke="#FF35D3" stroke-width="1.5"/>
+              <!-- Marquee -->
+              <rect x="12" y="6" width="30" height="10" rx="2" fill="#050719" stroke="#00F5FF" stroke-width="1"/>
+              <text x="27" y="14" fill="#FFE65C" font-size="6" font-weight="900" text-anchor="middle" font-family="monospace">XOX</text>
+              <!-- Screen -->
+              <rect x="10" y="20" width="34" height="24" rx="2" fill="#02030A" stroke="#FF35D3" stroke-width="1"/>
+              <circle cx="20" cy="29" r="4" stroke="#FF35D3" stroke-width="1.5"/>
+              <path d="M30 25 L38 33 M38 25 L30 33" stroke="#00F5FF" stroke-width="1.5" stroke-linecap="round"/>
+              <!-- Control Deck -->
+              <path d="M7 47 H47 L45 57 H9 Z" fill="#1A2045" stroke="#8B35FF" stroke-width="1"/>
+              <!-- Joystick & Buttons -->
+              <circle cx="36" cy="51" r="2.5" fill="#00F5FF"/>
+              <line x1="36" y1="51" x2="36" y2="55" stroke="#E8FFFF" stroke-width="1.5"/>
+              <circle cx="18" cy="52" r="1.5" fill="#FF35D3"/>
+              <circle cx="24" cy="52" r="1.5" fill="#FFE65C"/>
+              <!-- Coin Door -->
+              <rect x="18" y="59" width="18" height="8" rx="1" fill="#080A18" stroke="#FFE65C" stroke-width="0.8"/>
+              <line x1="24" y1="61" x2="24" y2="65" stroke="#FFE65C" stroke-width="1"/>
+              <line x1="30" y1="61" x2="30" y2="65" stroke="#FFE65C" stroke-width="1"/>
+            </svg>
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Arcade Frame & Bezel -->
+      <div class="cabinet-bezel">
+        <!-- Bezel Upper Status Bar -->
+        <div class="bezel-top-bar">
+          <div class="bezel-indicator credit-indicator">
+            <span class="blinking-dot"></span>
+            <span class="indicator-label">CREDIT</span>
+            <span class="indicator-value">01 FREE PLAY</span>
+          </div>
+
+          <div class="bezel-indicator active-mode-pill" id="bezel-mode-pill">
+            <span class="mode-icon">🕹️</span>
+            <span id="current-mode-label">2 PLAYER MODE</span>
+          </div>
+
+          <!-- Sound Toggle Button -->
+          <button id="sound-toggle-btn" class="bezel-sound-btn" aria-label="Toggle Sound Effects" title="Toggle Sound">
+            <span id="sound-icon" class="sound-icon" aria-hidden="true">🔊</span>
+            <span id="sound-text" class="sound-text">SFX ON</span>
+          </button>
+        </div>
+
+        <!-- The CRT Screen Housing -->
+        <div class="crt-screen-wrapper">
+          <!-- Glass Reflection & Glare Overlay -->
+          <div class="crt-glass-glare" aria-hidden="true"></div>
+          <!-- CRT Scanline Scan -->
+          <div class="crt-scanlines" aria-hidden="true"></div>
+          <!-- CRT Vignette & Curvature Shadow -->
+          <div class="crt-vignette" aria-hidden="true"></div>
+          <!-- Screen Glitch Flash Overlay -->
+          <div class="screen-glitch" id="screen-glitch" aria-hidden="true"></div>
+
+          <!-- Actual Digital Screen Interior -->
+          <div class="screen-inner-content">
+            <!-- Game Status Banner (Screen Readout) -->
+            <div class="status-banner-container">
+              <div class="status-badge-deco left">◀</div>
+              <div id="status-display" class="game-status-text" role="status" aria-live="polite">
+                PLAYER X'S TURN
+              </div>
+              <div class="status-badge-deco right">▶</div>
+            </div>
+
+            <!-- Arcade Scoreboard -->
+            <section class="scoreboard-container" aria-label="Game Scoreboard">
+              <!-- Player X Pod -->
+              <div class="score-card score-card-x" id="card-player-x">
+                <div class="card-glow-bg"></div>
+                <div class="card-header">
+                  <span class="symbol-glyph symbol-x">✕</span>
+                  <span class="player-name" id="label-player-x">PLAYER X</span>
+                </div>
+                <div class="score-number" id="score-x" aria-label="Player X Score: 0">0</div>
+                <div class="card-turn-pill active-turn" id="turn-pill-x">TURN</div>
+              </div>
+
+              <!-- Draws Pod -->
+              <div class="score-card score-card-draw" id="card-draws">
+                <div class="card-glow-bg"></div>
+                <div class="card-header">
+                  <span class="symbol-glyph symbol-draw">⚡</span>
+                  <span class="player-name">DRAWS</span>
+                </div>
+                <div class="score-number" id="score-draws" aria-label="Draws Count: 0">0</div>
+                <div class="card-turn-pill draw-pill">TIED</div>
+              </div>
+
+              <!-- Player O / CPU Pod -->
+              <div class="score-card score-card-o" id="card-player-o">
+                <div class="card-glow-bg"></div>
+                <div class="card-header">
+                  <span class="symbol-glyph symbol-o">◯</span>
+                  <span class="player-name" id="label-player-o">PLAYER O</span>
+                </div>
+                <div class="score-number" id="score-o" aria-label="Player O Score: 0">0</div>
+                <div class="card-turn-pill" id="turn-pill-o">WAIT</div>
+              </div>
+            </section>
+
+            <!-- 3x3 XOX Game Board Area -->
+            <div class="board-frame-wrapper">
+              <div class="board-neon-rim"></div>
+              
+              <!-- The 3x3 Grid -->
+              <div class="game-grid" id="game-grid" role="grid" aria-label="3 by 3 Tic-Tac-Toe Board">
+                <button class="grid-cell" data-index="0" role="gridcell" aria-label="Top Left, Empty"></button>
+                <button class="grid-cell" data-index="1" role="gridcell" aria-label="Top Center, Empty"></button>
+                <button class="grid-cell" data-index="2" role="gridcell" aria-label="Top Right, Empty"></button>
+                <button class="grid-cell" data-index="3" role="gridcell" aria-label="Middle Left, Empty"></button>
+                <button class="grid-cell" data-index="4" role="gridcell" aria-label="Center, Empty"></button>
+                <button class="grid-cell" data-index="5" role="gridcell" aria-label="Middle Right, Empty"></button>
+                <button class="grid-cell" data-index="6" role="gridcell" aria-label="Bottom Left, Empty"></button>
+                <button class="grid-cell" data-index="7" role="gridcell" aria-label="Bottom Center, Empty"></button>
+                <button class="grid-cell" data-index="8" role="gridcell" aria-label="Bottom Right, Empty"></button>
+              </div>
+
+              <!-- SVG Winning Strike Line Layer -->
+              <svg class="winning-strike-svg" id="winning-strike-svg" viewBox="0 0 300 300" aria-hidden="true">
+                <line id="winning-strike-line" x1="0" y1="0" x2="0" y2="0" stroke="url(#winning-glow-gradient)" stroke-width="8" stroke-linecap="round"/>
+                <defs>
+                  <linearGradient id="winning-glow-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00F5FF"/>
+                    <stop offset="50%" stop-color="#FFE65C"/>
+                    <stop offset="100%" stop-color="#FF35D3"/>
+                  </linearGradient>
+                </defs>
+              </svg>
+
+              <!-- Particle Confetti Burst Canvas -->
+              <div class="particles-overlay" id="particles-overlay" aria-hidden="true"></div>
+            </div>
+
+            <!-- Single-Player Info Reminder -->
+            <div class="screen-footer-meta" id="screen-footer-meta">
+              <span class="meta-icon">★</span>
+              <span id="footer-meta-text">FIRST TO ALIGN 3 MARKS CLAIMS THE VICTORY</span>
+              <span class="meta-icon">★</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arcade Control Deck & Action Buttons Panel -->
+      <footer class="arcade-control-deck">
+        <!-- Deck Chrome Trim & Decorative Rivets -->
+        <div class="deck-top-trim">
+          <span class="trim-rivet"></span>
+          <span class="trim-label">ARCADE MASTER CONTROLS</span>
+          <span class="trim-rivet"></span>
+        </div>
+
+        <div class="deck-buttons-grid">
+          <!-- Primary Controls Row -->
+          <div class="buttons-row main-actions-row">
+            <button id="new-game-btn" class="arcade-btn btn-cyan" title="Start a fresh round while keeping scores">
+              <span class="btn-shine"></span>
+              <span class="btn-icon">⚔️</span>
+              <span class="btn-text">NEW GAME</span>
+            </button>
+
+            <button id="play-again-btn" class="arcade-btn btn-purple" title="Play another round after game over">
+              <span class="btn-shine"></span>
+              <span class="btn-icon">🔁</span>
+              <span class="btn-text">PLAY AGAIN</span>
+            </button>
+
+            <button id="reset-score-btn" class="arcade-btn btn-danger" title="Clear all scores and statistics">
+              <span class="btn-shine"></span>
+              <span class="btn-icon">⚠️</span>
+              <span class="btn-text">RESET SCORE</span>
+            </button>
+          </div>
+
+          <!-- Mode Selection & Player Customization Row -->
+          <div class="buttons-row mode-actions-row">
+            <button id="two-player-btn" class="arcade-btn btn-yellow active-mode" title="Play with 2 players on same device">
+              <span class="btn-shine"></span>
+              <span class="btn-icon">👥</span>
+              <span class="btn-text">2 PLAYER</span>
+            </button>
+
+            <button id="vs-cpu-btn" class="arcade-btn btn-yellow" title="Play against the arcade computer AI">
+              <span class="btn-shine"></span>
+              <span class="btn-icon">🤖</span>
+              <span class="btn-text">VS COMPUTER</span>
+            </button>
+
+            <button id="switch-symbol-btn" class="arcade-btn btn-magenta" title="Switch your symbol between X and O in VS Computer mode">
+              <span class="btn-shine"></span>
+              <span class="btn-icon">🔄</span>
+              <span class="btn-text">SYMBOL: <strong id="current-human-symbol">X</strong></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Physical Arcade Hardware Deco: Joysticks, Pushbuttons & Coin Return Slots -->
+        <div class="cabinet-hardware-deco" aria-hidden="true">
+          <!-- Left Arcade Joystick Deco -->
+          <div class="hardware-item joystick-assembly">
+            <div class="joystick-base">
+              <div class="joystick-washer"></div>
+              <div class="joystick-shaft"></div>
+              <div class="joystick-ball ball-cyan"></div>
+            </div>
+            <span class="hardware-label">1P STICK</span>
+          </div>
+
+          <!-- Center Illuminated Coin Insert Door -->
+          <div class="hardware-item coin-door">
+            <div class="coin-slots-wrapper">
+              <div class="coin-slot-unit">
+                <div class="coin-slot-opening"></div>
+                <div class="coin-insert-badge">25¢ INSERT</div>
+              </div>
+              <div class="coin-slot-unit">
+                <div class="coin-slot-opening"></div>
+                <div class="coin-insert-badge">25¢ REJECT</div>
+              </div>
+            </div>
+            <div class="coin-keyhole"></div>
+          </div>
+
+          <!-- Right Arcade Action Buttons Deco -->
+          <div class="hardware-item arcade-pushbuttons">
+            <div class="pushbuttons-cluster">
+              <div class="pushbtn pushbtn-red"></div>
+              <div class="pushbtn pushbtn-blue"></div>
+              <div class="pushbtn pushbtn-yellow"></div>
+            </div>
+            <span class="hardware-label">ACTION</span>
+          </div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Arcade Confirmation Modal for Reset Score -->
+  <div id="reset-confirm-modal" class="arcade-modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div class="arcade-modal-box">
+      <div class="modal-corner-bracket tl"></div>
+      <div class="modal-corner-bracket tr"></div>
+      <div class="modal-corner-bracket bl"></div>
+      <div class="modal-corner-bracket br"></div>
+
+      <div class="modal-header">
+        <span class="modal-alert-icon">⚠️</span>
+        <h2 id="modal-title" class="modal-title">RESET HIGH SCORES?</h2>
+      </div>
+
+      <p class="modal-message">
+        ATTENTION OPERATOR: THIS WILL CLEAR ALL PLAYER WINS AND DRAW RECORDS BACK TO ZERO.
+      </p>
+
+      <div class="modal-actions">
+        <button id="modal-confirm-btn" class="arcade-btn btn-danger">
+          <span class="btn-text">YES, RESET</span>
+        </button>
+        <button id="modal-cancel-btn" class="arcade-btn btn-cyan">
+          <span class="btn-text">CANCEL</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
